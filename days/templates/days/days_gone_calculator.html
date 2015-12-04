@@ -1,0 +1,32 @@
+<head>
+  <title>Calculate Days Gone!</title>
+</head>
+
+<body>
+  <div id="content">
+    <h3>Calculate days gone!</h3>
+
+    <form method="POST">{% csrf_token %}
+      <table>
+        {% for field in form %}
+          <tr>
+            <th>{{ field.label }}</th>
+            <td>{{ field }}</td>
+            <td>{{ field.errors }}</td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <th></th>
+          <td><input type="submit"></td>
+        </tr>
+      </table>
+    </form>
+
+    <table>
+      <tr>
+        <th>Days gone:</th>
+        <td>{{ result }}</td>
+      </tr>
+    </table>
+  </div>
+</body>
