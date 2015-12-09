@@ -8,8 +8,8 @@ class DaysGoneCalculatorForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(DaysGoneCalculatorForm, self).clean()
-        departure_date = cleaned_data['departure_date']
-        return_date = cleaned_data['return_date']
-        if not departure_date < return_date:
+        departure_date = cleaned_data.get('departure_date', None)
+        return_date = cleaned_data.get('return_date', None)
+        if return_date and departure_date and return_date <= departure_date:
             raise ValidationError("Please enter a departure date prior to the return date.")
 
