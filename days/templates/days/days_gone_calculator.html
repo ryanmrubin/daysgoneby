@@ -41,7 +41,13 @@
         {% endfor %}
         <tr>
           <th></th>
-          <td><input type="submit"></td>
+          <td>
+            {% if result_data %}
+              <a href=''><input type="button" value="Reset" id="reset-button" /></a>
+            {% else %}
+              <input type="submit" id="form-submit" />
+            {% endif %}
+          </td>
         </tr>
       </table>
     </form>
@@ -59,5 +65,24 @@
       </table>
     {% endif %}
   </div>
+
+  {% if result_data %}
+    <script type="text/javascript">
+      window.onload = function() {
+        for (i = 0, fieldRows = document.getElementsByClassName('form-field'), len = fieldRows.length;
+             i < len;
+             i++) {
+          row = fieldRows[i];
+          for (j = 0, inputs = row.getElementsByTagName('input'), rowLength = inputs.length, j < rowLength;
+               j < rowLength;
+               j++) {
+            input = inputs[j];
+            input.disabled = true;
+          }
+        }
+      }
+
+    </script>
+  {% endif %}
 </body>
 </html>
