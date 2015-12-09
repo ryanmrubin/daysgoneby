@@ -1,12 +1,28 @@
 <head>
   <title>Calculate Days Gone!</title>
+  <style>
+    h1 {
+      font-size: 1.5rem;
+    }
+    ul li{
+      list-style: none;
+    }
+    .errorlist {
+      color: red;
+    }
+    th {
+      text-align: right;
+      padding-right: 0.6rem;
+    }
+
+  </style>
 </head>
 
 <body>
   <div id="content">
-    <h3>Calculate days gone!</h3>
+    <h1>Calculate days gone!</h1>
 
-    <form method="POST">{% csrf_token %}
+    <form method="POST" id="days-gone-form">{% csrf_token %}
       <table>
         <tr>
           <th></th>
@@ -15,7 +31,7 @@
         {% for field in form %}
           <tr>
             <th>{{ field.label }}</th>
-            <td>{{ field }}</td>
+            <td class="form-field">{{ field }}</td>
             <td>{{ field.errors }}</td>
           </tr>
           <tr>
