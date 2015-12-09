@@ -3,8 +3,8 @@ from django.core.exceptions import ValidationError
 
 
 class DaysGoneCalculatorForm(forms.Form):
-    departure_date = forms.DateField()
-    return_date = forms.DateField()
+    departure_date = forms.DateField(help_text="MM/DD/YYYY")
+    return_date = forms.DateField(help_text="MM/DD/YYYY")
 
     def clean(self):
         cleaned_data = super(DaysGoneCalculatorForm, self).clean()
