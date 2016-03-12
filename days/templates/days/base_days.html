@@ -1,29 +1,8 @@
+{% load static %}
 <html>
 <head>
   <title>{% block title %}Calculate Days Gone!{% endblock %}</title>
-  <style>
-    h1 {
-      font-size: 1.5rem;
-    }
-    ul li{
-      list-style: none;
-    }
-    .errorlist {
-      color: red;
-    }
-    th {
-      text-align: right;
-      padding-right: 0.6rem;
-    }
-    small {
-      font-size: 0.8rem;
-    }
-    #result-data {
-      font-size: 1.3rem;
-    }
-    {% block extra_style %}{% endblock %}
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="{% static 'daysgoneby.css' %}" />
   {% block extra_head %}{% endblock %}
 </head>
 
