@@ -6,6 +6,7 @@ from .utils import days_out_of_country
 def calculate_days_gone(request):
     form = DaysGoneCalculatorForm()
     result_data = {}
+
     if request.method == "POST":
         form = DaysGoneCalculatorForm(request.POST)
         if form.is_valid():
@@ -13,8 +14,9 @@ def calculate_days_gone(request):
             return_date = form.cleaned_data['return_date']
             result_data['days_gone'] = days_out_of_country(departure_date,
                                                            return_date)
-
             result_data['departure_date'] = departure_date
             result_data['return_date'] = return_date
 
-    return render(request, 'days/days_gone_calculator.html', dict(form=form, result_data=result_data))
+    context = {'form': form,
+               'return_data': return_data}
+    return render(request, 'days/days_gone_calculator.html', context)
