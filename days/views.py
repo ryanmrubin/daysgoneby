@@ -53,6 +53,7 @@ def multiple_trips(request):
                                          return_date.strftime(DATE_FORMAT),
                                          days_gone))
                 request.session['trips_so_far'] = trips_so_far
+                form = DaysGoneCalculatorForm()
 
     total_days_gone = sum([li.days_gone for li in trips_so_far])
     context = {'form': form,
