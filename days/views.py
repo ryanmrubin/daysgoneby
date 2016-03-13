@@ -18,5 +18,5 @@ def calculate_days_gone(request):
             result_data['return_date'] = return_date
 
     context = {'form': form,
-               'return_data': return_data}
+               'result_data': result_data}
     return render(request, 'days/days_gone_calculator.html', context)
