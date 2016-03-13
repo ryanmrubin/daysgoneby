@@ -17,3 +17,6 @@ small {
 #result-data {
   font-size: 1.3rem;
 }
+.sum-cell {
+  border-top: 1px solid black;
+}
