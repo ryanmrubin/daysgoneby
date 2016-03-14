@@ -13,3 +13,5 @@ class DaysGoneCalculatorForm(forms.Form):
         if return_date and departure_date and return_date <= departure_date:
             raise ValidationError("Please enter a departure date prior to the return date.")
 
+class N400SubmissionForm(forms.Form):
+    n400_submission_date = forms.DateField(help_text="MM/DD/YYYY")
