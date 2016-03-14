@@ -1,10 +1,7 @@
-{% extends 'days/base_days.html' %}
+{% extends 'days/n400_base.html' %}
 
-{% block content %}
-
-  <h1>Calculate Multiple Trips!</h1>
-  <h4>More specific header</h4>
-  <p>Form for N-400 date. That should be entered before any other dates, and displayed here after that.</p>
+{% block n400_content %}
+  <p>Enter dates below for N-400 submitted <strong>{{ submission_date }}</strong>.</p>
   <form method="POST" id="days-gone-form">{% csrf_token %}
     <table>
       <tr>
@@ -25,10 +22,8 @@
       <tr>
         <th></th>
         <td>
-          {% if trips_so_far %}
-            <input type="submit" name="submit" value="reset" id="reset-button" />
-          {% endif %}
           <input type="submit" name="submit" value="submit" id="form-submit"/>
+          <input type="submit" name="submit" value="reset" id="reset-button" />
         </td>
       </tr>
     </table>
@@ -55,6 +50,6 @@
       <tr>
     </tr>
     </table>
-    This should also say "fulfilled physical presence requirement" if the total days is fewer than 2.5years. (913 days?)
   {% endif %}
- {% endblock content %}
+
+{% endblock n400_content %}
