@@ -2,8 +2,7 @@ from collections import namedtuple
 from django.shortcuts import render
 from .forms import DaysGoneCalculatorForm
 from .utils import days_out_of_country
-
-
+from django.views.generic import View
 DATE_FORMAT = '%m/%d/%Y'
 trip = namedtuple('trip', ('departure_date', 'return_date', 'days_gone'))
 
