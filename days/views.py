@@ -1,10 +1,7 @@
-from collections import namedtuple
 from django.shortcuts import render
-from .forms import DaysGoneCalculatorForm
-from .utils import days_out_of_country
 from django.views.generic import View
-DATE_FORMAT = '%m/%d/%Y'
-trip = namedtuple('trip', ('departure_date', 'return_date', 'days_gone'))
+from .forms import DaysGoneCalculatorForm
+from .utils import days_out_of_country, ForeignTrip, insert_trip, get_total_days_gone
 
 
 def calculate_days_gone(request):
@@ -35,9 +32,8 @@ class N400View(View):
     # handle overlapping trips
     def get(self, request, *args, **kwargs):
         form = DaysGoneCalculatorForm()
-        trips_so_far = [trip(*li) for li
-                        in request.session.get('trips_so_far', [])]
-        total_days_gone = sum([li.days_gone for li in trips_so_far])
+        trips_so_far = request.session.get('trips_so_far', [])
+        total_days_gone = get_total_days_gone(trips_so_far)
         context = {'form': form,
                    'trips_so_far': trips_so_far,
                    'total_days_gone': total_days_gone}
@@ -45,8 +41,7 @@ class N400View(View):
 
     def post(self, request, *args, **kwargs):
         form = DaysGoneCalculatorForm()
-        trips_so_far = [trip(*li) for li
-                        in request.session.get('trips_so_far', [])]
+        trips_so_far = request.session.get('trips_so_far', [])
         if request.POST['submit'] == 'reset':
             trips_so_far = request.session['trips_so_far'] = []
         else:
@@ -57,12 +52,11 @@ class N400View(View):
                 return_date = form.cleaned_data['return_date']
                 days_gone = days_out_of_country(departure_date, return_date)
 
-                trips_so_far.append(trip(departure_date.strftime(DATE_FORMAT),
-                                         return_date.strftime(DATE_FORMAT),
-                                         days_gone))
+                insert_trip(ForeignTrip(departure_date, return_date, days_gone),
+                            trips_so_far)
                 request.session['trips_so_far'] = trips_so_far
                 form = DaysGoneCalculatorForm()
-        total_days_gone = sum([li.days_gone for li in trips_so_far])
+        total_days_gone = get_total_days_gone(trips_so_far)
         context = {'form': form,
                    'trips_so_far': trips_so_far,
                    'total_days_gone': total_days_gone}
