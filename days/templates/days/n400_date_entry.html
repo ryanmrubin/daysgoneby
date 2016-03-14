@@ -36,19 +36,17 @@
         <th>Return Date</th>
         <th>Days Gone</th>
       </tr>
-    {% for trip in trips_so_far %}
-      <tr>
-        <td>{{ trip.departure_date }}</td>
-        <td>{{ trip.return_date }}</td>
-        <td>{{ trip.days_gone }}</td>
-      </tr>
-    {% endfor %}
+      {% for trip in trips_so_far %}
+        <tr>
+          <td>{{ trip.departure_date }}</td>
+          <td>{{ trip.return_date }}</td>
+          <td>{{ trip.days_gone }}</td>
+        </tr>
+      {% endfor %}
       <tr class="sum-row">
         <th colspan="2">Total Days Gone:</th>
         <td class="sum-cell">{{ total_days_gone }}</td>
       </tr>
-      <tr>
-    </tr>
     </table>
   {% endif %}
 
