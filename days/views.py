@@ -69,8 +69,10 @@ def n400_date_entry(request):
     # highlight days greater than 180 as needing further explanation
     # compare total days gone to the max number (913? for 2.5 years?) and display note, along with coloring text appropriately
 
+    # validate N400 submission not in the future (and more than 5 years ago? ask Mia.)
     # add messages app so as to alert when some of the following happen
     # sort trips in trips_so_far
     # handle overlapping trips
     # throw out days out of the country if they were before n-400 date (dobule-check with Mia)
+    # throw out days out of the country if they were more than 5 years from n-400 date (double-check with Mia)
     # calculate the 913(?) days out of the 5 years from that n-400 date forward.
