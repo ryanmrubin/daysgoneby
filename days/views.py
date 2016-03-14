@@ -42,11 +42,12 @@ class N400View(View):
     def post(self, request, *args, **kwargs):
         form = DaysGoneCalculatorForm()
         trips_so_far = request.session.get('trips_so_far', [])
+
         if request.POST['submit'] == 'reset':
             trips_so_far = request.session['trips_so_far'] = []
+
         else:
             form = DaysGoneCalculatorForm(request.POST)
-
             if form.is_valid():
                 departure_date = form.cleaned_data['departure_date']
                 return_date = form.cleaned_data['return_date']
@@ -56,6 +57,7 @@ class N400View(View):
                             trips_so_far)
                 request.session['trips_so_far'] = trips_so_far
                 form = DaysGoneCalculatorForm()
+
         total_days_gone = get_total_days_gone(trips_so_far)
         context = {'form': form,
                    'trips_so_far': trips_so_far,
