@@ -12,6 +12,17 @@ def days_out_of_country(departure_date, return_date):
     return (return_date - departure_date).days - 1
 
 
+def build_foreign_trip(departure_date, return_date):
+    days_gone = days_out_of_country(departure_date, return_date)
+    return ForeignTrip(departure_date, return_date, days_gone)
+
+
+def build_foreign_trip_from_form(form):
+    departure_date = form.cleaned_data['departure_date']
+    return_date = form.cleaned_data['return_date']
+    return build_foreign_trip(departure_date, return_date)
+
+
 def insert_trip(trip, lst):
     lst.append(trip)
 

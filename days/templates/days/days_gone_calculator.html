@@ -24,7 +24,7 @@
       <tr>
         <th></th>
         <td>
-          {% if result_data %}
+          {% if trip %}
             <a href=''><input type="button" value="Reset" id="reset-button" /></a>
           {% else %}
             <input type="submit" id="form-submit" />
@@ -35,18 +35,18 @@
 
   </form>
 
-  {% if result_data %}
+  {% if trip %}
     <table id="result-data">
       <tr>
         <th>Days Gone</th>
-        <td>{{ result_data.days_gone }}</td>
+        <td>{{ trip.days_gone }}</td>
       </tr>
     </table>
   {% endif %}
 {% endblock content %}
 
 {% block extra_js %}
-  {% if result_data %}
+  {% if trip %}
     <script type="text/javascript" src="{% static 'days_gone_form.js' %}"></script>
   {% endif %}
 {% endblock extra_js %}
