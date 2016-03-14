@@ -47,7 +47,7 @@ LANGUAGE_CODE = 'en-us'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
@@ -55,3 +55,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, '..', 'static'),
 )
+
+DATE_FORMAT = 'm/d/Y'
