@@ -67,12 +67,12 @@ def n400_date_entry(request):
 
     # redirect similar urls to the N-400/etc urls.
     # highlight days greater than 180 as needing further explanation
-    # compare total days gone to the max number (913? for 2.5 years?) and display note, along with coloring text appropriately
+    # compare total days gone to the max number (if present for 913 OR MORE in 5 years prior to n-400 date, to they meet the req.)--colornumber and display note
 
-    # validate N400 submission not in the future (and more than 5 years ago? ask Mia.)
     # add messages app so as to alert when some of the following happen
     # sort trips in trips_so_far
-    # handle overlapping trips
-    # throw out days out of the country if they were before n-400 date (dobule-check with Mia)
-    # throw out days out of the country if they were more than 5 years from n-400 date (double-check with Mia)
-    # calculate the 913(?) days out of the 5 years from that n-400 date forward.
+    # overlapping trips mean throw an error and tell to fix.
+    # throw out days out of the country if they were more than 5 years prior to n-400 date
+        # show whole trip but include a note. (put notes column in table--the 180+ shoulddo that too.)
+        # in this event, show extra line--Total Days Gone in Statutory Period
+    # if trip range includes date of n-400 submission, throw error saying to check date of submission

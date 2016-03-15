@@ -2,6 +2,12 @@
 
 {% block n400_content %}
   <p>Enter dates below for N-400 submitted <strong>{{ submission_date }}</strong>.</p>
+  <ul>
+    <li>Each trip entered will appear below with the number of days gone.</li>
+    <li>The total days gone will be displayed at the bottom of the list.</li>
+    <li>Trips that are more than 180 days will appear in red to alert possible finding of broken continuous residence.</li>
+    <li>Totals exceeding maximum allowed under physical presence requirements will be marked as such.</li>
+  </ul>
   <form method="POST" id="days-gone-form">{% csrf_token %}
     <table>
       <tr>
