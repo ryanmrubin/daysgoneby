@@ -46,7 +46,9 @@
         <tr>
           <td>{{ trip.departure_date }}</td>
           <td>{{ trip.return_date }}</td>
-          <td>{{ trip.days_gone }}</td>
+          <td{% if trip.days_gone >= trip_alert_length %} class="alert"{% endif %}>
+            {{ trip.days_gone }}{% if trip.days_gone >= trip_alert_length %} (Note: possible finding of broken continuous residence) {% endif %}
+          </td>
         </tr>
       {% endfor %}
       <tr class="sum-row">

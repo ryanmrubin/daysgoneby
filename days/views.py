@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from .forms import DaysGoneCalculatorForm, N400SubmissionForm
@@ -59,8 +60,11 @@ def n400_date_entry(request):
                 form = DaysGoneCalculatorForm()
 
     total_days_gone = trips_so_far.total_days_gone
+    trip_alert_length = settings.BROKEN_CONTINUOUS_RESIDENCE_THRESHOLD_DAYS
     context = {'submission_date': submission_date,
                'form': form,
                'trips_so_far': trips_so_far,
-               'total_days_gone': total_days_gone}
+               'total_days_gone': total_days_gone,
+               'trip_alert_length':trip_alert_length,
+              }
     return render(request,'days/n400_date_entry.html', context)

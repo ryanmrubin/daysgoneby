@@ -11,6 +11,9 @@ th {
   text-align: right;
   padding-right: 0.6rem;
 }
+td.alert {
+  color: red;
+}
 small {
   font-size: 0.8rem;
 }
