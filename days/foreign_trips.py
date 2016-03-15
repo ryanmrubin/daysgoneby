@@ -3,8 +3,18 @@ import datetime as dt
 class ForeignTrip():
     def __init__(self, departure_date, return_date):
         super().__init__()
+
+        if isinstance(departure_date, dt.datetime):
+            departure_date = departure_date.date()
+        if isinstance(return_date, dt.datetime):
+            return_date = return_date.date()
+
         self.departure_date = departure_date
         self.return_date = return_date
+
+    def __eq__(self, other):
+        return (self.departure_date == other.departure_date
+            and self.return_date == other.return_date)
 
     def __contains__(self, other_date):
         if isinstance(other_date, dt.datetime):

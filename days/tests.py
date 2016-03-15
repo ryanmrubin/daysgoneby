@@ -75,6 +75,48 @@ class ForeignTripTestCase(unittest.TestCase):
         included_datetime = datetime(2015, 10, 23, 0, 0)
         self.assertIn(included_datetime, trip)
 
+    def test_equality_with_another_trip_with_same_departure_and_return_dates(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip_one = ForeignTrip(departure_date, return_date)
+        trip_two = ForeignTrip(departure_date, return_date)
+        self.assertEqual(trip_one, trip_two)
+
+    def test_inequality_with_another_trip_with_different_departure_date(self):
+        departure_date_one = date(2015, 10, 20)
+        departure_date_two = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip_one = ForeignTrip(departure_date_one, return_date)
+        trip_two = ForeignTrip(departure_date_two, return_date)
+        self.assertNotEqual(trip_one, trip_two)
+
+    def test_inequality_with_another_trip_with_different_return_date(self):
+        departure_date = date(2015, 10, 20)
+        return_date_one = date(2015, 10, 25)
+        return_date_two = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date, return_date_one)
+        trip_two = ForeignTrip(departure_date, return_date_two)
+        self.assertNotEqual(trip_one, trip_two)
+
+    def test_inequality_with_another_trip_with_neither_date_in_common(self):
+        departure_date_one = date(2015, 10, 20)
+        departure_date_two = date(2015, 10, 21)
+        return_date_one = date(2015, 10, 25)
+        return_date_two = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        self.assertNotEqual(trip_one, trip_two)
+
+    def test_equality_with_another_trip_formed_with_datetimes(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        departure_datetime = datetime(2015, 10, 21)
+        return_datetime = datetime(2015, 10, 25)
+
+        trip_one = ForeignTrip(departure_date, return_date)
+        trip_two = ForeignTrip(departure_datetime, return_datetime)
+        self.assertEqual(trip_one, trip_two)
+
 
 class ForeignTripListTestCase(unittest.TestCase):
     def test_total_days_gone_sums_days_gone_for_each_foreign_trip(self):
