@@ -13,6 +13,9 @@ class ForeignTrip():
         return (other_date >= self.departure_date
             and other_date <= self.return_date)
 
+    def __repr__(self):
+        return 'ForeignTrip(%s, %s)' % (self.departure_date, self.return_date)
+
     @property
     def days_gone(self):
         """
