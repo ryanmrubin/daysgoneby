@@ -11,6 +11,7 @@ DEBUG = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 INSTALLED_APPS = [
+    'django.contrib.messages',
     'django.contrib.staticfiles',
     'days',
 ]
@@ -19,6 +20,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware'
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
@@ -36,6 +38,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },

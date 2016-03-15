@@ -7,6 +7,13 @@ ul li{
 .errorlist {
   color: red;
 }
+.messages {
+  background: #CECDFF;
+  font-size: 1.2rem;
+}
+.messages li.warning {
+  color: red;
+}
 th {
   text-align: right;
   padding-right: 0.6rem;

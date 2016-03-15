@@ -3,10 +3,16 @@
 {% block title %}N-400 Trip Calculator{% endblock %}
 
 {% block content %}
-
   <h1>Calculate Multiple Trips!</h1>
   <h3>for the N-400 Physical Presence and Continuous Residence Requirements</h3>
 
-  {% block n400_content %}{% endblock %}
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 
+  {% block n400_content %}{% endblock %}
 {% endblock content %}

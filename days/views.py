@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from .forms import DaysGoneCalculatorForm, N400SubmissionForm
