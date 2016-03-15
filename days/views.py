@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from .forms import DaysGoneCalculatorForm, N400SubmissionForm
-from .utils import build_foreign_trip_from_form, insert_trip, get_total_days_gone
+from .foreign_trips import ForeignTrip, ForeignTripList
 
 
 def calculate_days_gone(request):
@@ -11,7 +11,7 @@ def calculate_days_gone(request):
     if request.method == "POST":
         form = DaysGoneCalculatorForm(request.POST)
         if form.is_valid():
-            trip = build_foreign_trip_from_form(form)
+            trip = ForeignTrip.build_from_form(form)
 
     context = {'form': form,
                'trip': trip}
@@ -41,7 +41,7 @@ def n400_date_entry(request):
         return redirect(reverse('n400_home'))
 
     form = DaysGoneCalculatorForm()
-    trips_so_far = request.session.get('trips_so_far', [])
+    trips_so_far = request.session.get('trips_so_far', ForeignTripList())
 
     if request.method == 'POST':
         if request.POST['submit'] == 'reset':
@@ -52,13 +52,13 @@ def n400_date_entry(request):
         else:
             form = DaysGoneCalculatorForm(request.POST)
             if form.is_valid():
-                trip = build_foreign_trip_from_form(form)
-                insert_trip(trip, trips_so_far)
+                trip = ForeignTrip.build_from_form(form)
+                trips_so_far.insert_trip(trip)
                 request.session['trips_so_far'] = trips_so_far
 
                 form = DaysGoneCalculatorForm()
 
-    total_days_gone = get_total_days_gone(trips_so_far)
+    total_days_gone = trips_so_far.total_days_gone
     context = {'submission_date': submission_date,
                'form': form,
                'trips_so_far': trips_so_far,
