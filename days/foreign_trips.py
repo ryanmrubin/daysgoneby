@@ -1,8 +1,17 @@
+import datetime as dt
+
 class ForeignTrip():
     def __init__(self, departure_date, return_date):
         super().__init__()
         self.departure_date = departure_date
         self.return_date = return_date
+
+    def __contains__(self, other_date):
+        if isinstance(other_date, dt.datetime):
+            other_date = other_date.date()
+
+        return (other_date >= self.departure_date
+            and other_date <= self.return_date)
 
     @property
     def days_gone(self):

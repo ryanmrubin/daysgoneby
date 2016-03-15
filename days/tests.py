@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 import unittest
 from unittest import mock
 from .foreign_trips import ForeignTrip, ForeignTripList
@@ -38,6 +38,42 @@ class ForeignTripTestCase(unittest.TestCase):
 
         self.assertEqual(trip.departure_date, departure_date)
         self.assertEqual(trip.return_date, return_date)
+
+    def test_contains_date_within_range(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip = ForeignTrip(departure_date, return_date)
+
+        included_date = date(2015, 10, 23)
+        self.assertIn(included_date, trip)
+
+    def test_does_not_contain_date_outside_range(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip = ForeignTrip(departure_date, return_date)
+
+        outside_date = date(2015, 10, 28)
+        self.assertNotIn(outside_date, trip)
+
+    def test_contains_departure_date(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip = ForeignTrip(departure_date, return_date)
+        self.assertIn(departure_date, trip)
+
+    def test_contains_return_date(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip = ForeignTrip(departure_date, return_date)
+        self.assertIn(return_date, trip)
+
+    def test_contains_works_on_datetimes(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip = ForeignTrip(departure_date, return_date)
+
+        included_datetime = datetime(2015, 10, 23, 0, 0)
+        self.assertIn(included_datetime, trip)
 
 
 class ForeignTripListTestCase(unittest.TestCase):
