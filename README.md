@@ -9,7 +9,10 @@ For dev setup (Ubuntu):
  3. `source env/bin/activate`
  4. `pip install -r dev-requirements.txt`
  5. `export DJANGO_SETTINGS_MODULE='daysgoneby.settings.dev'`
- 6. `./manage.py runserver`
+ 6. `./manage.py test`
+ 7. Verify tests pass.
+ 8. `./manage.py runserver`
+ 9. Verify server is running.
 
 Here's a handy pair of aliases for you to tweak and use:
 
