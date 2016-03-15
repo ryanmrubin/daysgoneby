@@ -5,6 +5,24 @@ from .foreign_trips import ForeignTrip, ForeignTripList
 
 
 class ForeignTripTestCase(unittest.TestCase):
+    def test_constructor_stores_date_attributes_as_dates(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip = ForeignTrip(departure_date, return_date)
+        self.assertIsInstance(trip.departure_date, date)
+        self.assertNotIsInstance(trip.departure_date, datetime)
+        self.assertIsInstance(trip.return_date, date)
+        self.assertNotIsInstance(trip.return_date, datetime)
+
+    def test_constructor_stores_datetime_arguments_as_dates(self):
+        departure_date = datetime(2015, 10, 21)
+        return_date = datetime(2015, 10, 25)
+        trip = ForeignTrip(departure_date, return_date)
+        self.assertIsInstance(trip.departure_date, date)
+        self.assertNotIsInstance(trip.departure_date, datetime)
+        self.assertIsInstance(trip.return_date, date)
+        self.assertNotIsInstance(trip.return_date, datetime)
+
     def test_days_gone_does_not_count_travel_dates(self):
         departure_date = date(2015, 10, 21)
         return_date = date(2015, 10, 25)
