@@ -3,6 +3,12 @@ import datetime as dt
 from functools import total_ordering
 
 
+class DuplicateTripError(ValueError):
+    pass
+
+class OverlappingTripError(ValueError):
+    pass
+
 @total_ordering
 class ForeignTrip:
     def __init__(self, departure_date, return_date):
@@ -87,8 +93,4 @@ class ForeignTripList(list):
         return sum(trip.days_gone for trip in self)
 
 
-class DuplicateTripError(ValueError):
-    pass
 
-class OverlappingTripError(ValueError):
-    pass
