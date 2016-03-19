@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from .forms import DaysGoneCalculatorForm, N400SubmissionForm
-from .foreign_trips import ForeignTrip, ForeignTripList
+from .foreign_trips import ForeignTrip, ForeignTripList, DuplicateTripError
 
 
 def calculate_days_gone(request):
@@ -55,7 +55,11 @@ def n400_date_entry(request):
             form = DaysGoneCalculatorForm(request.POST)
             if form.is_valid():
                 trip = ForeignTrip.build_from_form(form)
-                trips_so_far.insert_trip(trip)
+                try:
+                    trips_so_far.insert_trip(trip)
+                except DuplicateTripError:
+                    messages.error(request, ("This trip has already been "
+                                             "entered for this application."))
                 request.session['trips_so_far'] = trips_so_far
 
                 form = DaysGoneCalculatorForm()
