@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from .forms import DaysGoneCalculatorForm, N400SubmissionForm
-from .foreign_trips import ForeignTrip, ForeignTripList, DuplicateTripError
+from .foreign_trips import (ForeignTrip, ForeignTripList,
+                            DuplicateTripError, OverlappingTripError)
 
 
 def calculate_days_gone(request):
@@ -60,6 +61,13 @@ def n400_date_entry(request):
                 except DuplicateTripError:
                     messages.error(request, ("This trip has already been "
                                              "entered for this application."))
+                except OverlappingTripError:
+                    message = ("Trip from %s to %s overlaps with a previously "
+                               "entered trip for this N-400."
+                               % (trip.departure_date.strftime('%m/%d/%Y'),
+                                  trip.return_date.strftime('%m/%d/%Y')))
+                    messages.error(request, message)
+
                 request.session['trips_so_far'] = trips_so_far
 
                 form = DaysGoneCalculatorForm()
