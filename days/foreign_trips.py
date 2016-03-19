@@ -91,6 +91,3 @@ class ForeignTripList(list):
     @property
     def total_days_gone(self):
         return sum(trip.days_gone for trip in self)
-
-
-
