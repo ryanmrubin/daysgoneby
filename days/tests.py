@@ -276,12 +276,8 @@ class ForeignTripListTestCase(unittest.TestCase):
         self.assertEqual(trip_list.total_days_gone, 4)
 
     def test_insert_trip_adds_trip_to_original_list(self):
-        departure_date_one = date(2015, 10, 20)
-        departure_date_two = date(2015, 10, 21)
-        return_date_one = date(2015, 10, 25)
-        return_date_two = date(2015, 10, 28)
-        trip_one = ForeignTrip(departure_date_one, return_date_one)
-        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        trip_one = ForeignTrip(date(2015, 10, 20), date(2015, 10, 21))
+        trip_two = ForeignTrip(date(2015, 10, 25), date(2015, 10, 28))
 
         trip_list = ForeignTripList([trip_one])
         trip_list.insert_trip(trip_two)
