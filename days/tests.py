@@ -1,7 +1,8 @@
 from datetime import date, datetime
 import unittest
 from unittest import mock
-from .foreign_trips import ForeignTrip, ForeignTripList, DuplicateTripError
+from .foreign_trips import (ForeignTrip, ForeignTripList,
+                            DuplicateTripError, OverlappingTripError)
 
 
 class ForeignTripTestCase(unittest.TestCase):
@@ -304,3 +305,43 @@ class ForeignTripListTestCase(unittest.TestCase):
         self.assertEqual(trip_list[0], trip_1)
         self.assertEqual(trip_list[1], trip_2)
         self.assertEqual(trip_list[2], trip_3)
+
+    def test_insert_trip_raises_overlappingtriperror_and_does_not_add_trip_when_overlapping_previous_trip(self):
+        trip_1 = ForeignTrip(date(2016, 1, 1), date(2016, 2, 1))
+        trip_2 = ForeignTrip(date(2016, 1, 15), date(2016, 2, 15))
+        trip_list = ForeignTripList([trip_1])
+        with self.assertRaises(OverlappingTripError):
+            trip_list.insert_trip(trip_2)
+        self.assertNotIn(trip_2, trip_list)
+
+    def test_insert_trip_raises_overlappingtriperror_and_does_not_add_trip_when_overlapping_next_trip(self):
+        trip_1 = ForeignTrip(date(2016, 1, 1), date(2016, 2, 1))
+        trip_2 = ForeignTrip(date(2016, 1, 15), date(2016, 2, 15))
+        trip_list = ForeignTripList([trip_2])
+        with self.assertRaises(OverlappingTripError):
+            trip_list.insert_trip(trip_1)
+        self.assertNotIn(trip_1, trip_list)
+
+    def test_insert_trip_inserts_trips_at_the_beginning(self):
+        trip_1 = ForeignTrip(date(2016, 1, 1), date(2016, 1, 15))
+        trip_2 = ForeignTrip(date(2016, 2, 2), date(2016, 2, 15))
+        trip_3 = ForeignTrip(date(2016, 3, 3), date(2016, 3, 15))
+        trip_list = ForeignTripList([trip_2, trip_3])
+        trip_list.insert_trip(trip_1)
+        self.assertIn(trip_1, trip_list)
+
+    def test_insert_trip_inserts_trips_at_the_end(self):
+        trip_1 = ForeignTrip(date(2016, 1, 1), date(2016, 1, 15))
+        trip_2 = ForeignTrip(date(2016, 2, 2), date(2016, 2, 15))
+        trip_3 = ForeignTrip(date(2016, 3, 3), date(2016, 3, 15))
+        trip_list = ForeignTripList([trip_1, trip_2])
+        trip_list.insert_trip(trip_3)
+        self.assertIn(trip_3, trip_list)
+
+    def test_insert_trip_inserts_trips_in_the_middle(self):
+        trip_1 = ForeignTrip(date(2016, 1, 1), date(2016, 1, 15))
+        trip_2 = ForeignTrip(date(2016, 2, 2), date(2016, 2, 15))
+        trip_3 = ForeignTrip(date(2016, 3, 3), date(2016, 3, 15))
+        trip_list = ForeignTripList([trip_1, trip_3])
+        trip_list.insert_trip(trip_2)
+        self.assertIn(trip_2, trip_list)

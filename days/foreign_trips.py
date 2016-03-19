@@ -62,6 +62,24 @@ class ForeignTripList(list):
         if trip in self:
             raise DuplicateTripError("ForeignTrip instances in a "
                                      "ForeignTripList must be unique.")
+        insert_point = bisect.bisect(self, trip)
+
+        try:
+            trip_before = self[insert_point-1]
+            if trip.departure_date in trip_before:
+                raise OverlappingTripError("%s overlaps with %s."
+                                           % (trip, trip_before))
+        except IndexError:
+            pass
+
+        try:
+            trip_after = self[insert_point]
+            if trip.return_date in trip_after:
+                raise OverlappingTripError("%s overlaps with %s."
+                                           % (trip, trip_after))
+        except IndexError:
+            pass
+
         bisect.insort(self, trip)
 
     @property
@@ -70,4 +88,7 @@ class ForeignTripList(list):
 
 
 class DuplicateTripError(ValueError):
+    pass
+
+class OverlappingTripError(ValueError):
     pass
