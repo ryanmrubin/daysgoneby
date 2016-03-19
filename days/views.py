@@ -56,17 +56,25 @@ def n400_date_entry(request):
             form = DaysGoneCalculatorForm(request.POST)
             if form.is_valid():
                 trip = ForeignTrip.build_from_form(form)
-                try:
-                    trips_so_far.insert_trip(trip)
-                except DuplicateTripError:
-                    messages.error(request, ("This trip has already been "
-                                             "entered for this application."))
-                except OverlappingTripError:
-                    message = ("Trip from %s to %s overlaps with a previously "
-                               "entered trip for this N-400."
-                               % (trip.departure_date.strftime('%m/%d/%Y'),
-                                  trip.return_date.strftime('%m/%d/%Y')))
-                    messages.error(request, message)
+
+                if submission_date <= trip.return_date:
+                    messages.warning(request, ("This trip concludes on or after "
+                                               "the N-400 submision date. "
+                                               "Please check dates."))
+
+                else:
+                    try:
+                        trips_so_far.insert_trip(trip)
+
+                    except DuplicateTripError:
+                        messages.error(request, ("This trip has already been "
+                                                 "entered for this application."))
+                    except OverlappingTripError:
+                        message = ("Trip from %s to %s overlaps with a previously "
+                                   "entered trip for this N-400."
+                                   % (trip.departure_date.strftime('%m/%d/%Y'),
+                                      trip.return_date.strftime('%m/%d/%Y')))
+                        messages.error(request, message)
 
                 request.session['trips_so_far'] = trips_so_far
 
