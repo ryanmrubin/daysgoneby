@@ -1,5 +1,7 @@
+import bisect
 import datetime as dt
 from functools import total_ordering
+
 
 @total_ordering
 class ForeignTrip:
@@ -60,7 +62,7 @@ class ForeignTripList(list):
         if trip in self:
             raise DuplicateTripError("ForeignTrip instances in a "
                                      "ForeignTripList must be unique.")
-        self.append(trip)
+        bisect.insort(self, trip)
 
     @property
     def total_days_gone(self):

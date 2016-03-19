@@ -267,7 +267,6 @@ class ForeignTripListTestCase(unittest.TestCase):
         self.assertEqual(trip_list,
                     ForeignTripList([trip_1, trip_2, trip_3, trip_4, trip_5]))
 
-
     def test_total_days_gone_sums_days_gone_for_each_foreign_trip(self):
         three_day_trip = ForeignTrip(date(2015, 10, 21), date(2015, 10, 25))
         no_day_trip  = ForeignTrip(date(2015, 10, 26), date(2015, 10, 27))
@@ -299,3 +298,13 @@ class ForeignTripListTestCase(unittest.TestCase):
         with self.assertRaises(DuplicateTripError):
             trip_list.insert_trip(identical_trip)
         self.assertEqual(len(trip_list), 1)
+
+    def test_insert_trip_maintains_list_sorting(self):
+        trip_1 = ForeignTrip(date(2016, 1, 1), date(2016, 1, 15))
+        trip_2 = ForeignTrip(date(2016, 2, 2), date(2016, 2, 15))
+        trip_3 = ForeignTrip(date(2016, 3, 3), date(2016, 3, 15))
+        trip_list = ForeignTripList([trip_1, trip_3])
+        trip_list.insert_trip(trip_2)
+        self.assertEqual(trip_list[0], trip_1)
+        self.assertEqual(trip_list[1], trip_2)
+        self.assertEqual(trip_list[2], trip_3)
