@@ -80,7 +80,7 @@ class ForeignTripList(list):
         except IndexError:
             pass
 
-        bisect.insort(self, trip)
+        self.insert(insert_point, trip)
 
     @property
     def total_days_gone(self):
