@@ -137,10 +137,34 @@ class ForeignTripTestCase(unittest.TestCase):
 
 
 class ForeignTripListTestCase(unittest.TestCase):
+    def test_constructor_will_create_empty_sequence(self):
+        trip_list = ForeignTripList()
+        self.assertEqual(len(trip_list), 0)
+
+    def test_constructor_will_create_sequence_of_foreigntrip_instances(self):
+        departure_date_one = date(2015, 10, 20)
+        departure_date_two = date(2015, 10, 21)
+        return_date_one = date(2015, 10, 25)
+        return_date_two = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        trip_list = ForeignTripList([trip_one, trip_two])
+        self.assertIn(trip_one, trip_list)
+        self.assertIn(trip_two, trip_list)
+        self.assertEqual(len(trip_list), 2)
+
+    def test_constructor_will_not_accept_non_foreigntrip_items(self):
+        with self.assertRaises(ValueError):
+            ForeignTripList(["Not a ForeignTrip"])
+
     def test_total_days_gone_sums_days_gone_for_each_foreign_trip(self):
-        three_day_trip = mock.Mock(days_gone=3)
-        no_day_trip = mock.Mock(days_gone=0)
-        one_day_trip = mock.Mock(days_gone=1)
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 22)
+        trip = ForeignTrip(departure_date, return_date)
+
+        three_day_trip = mock.Mock(spec=trip, days_gone=3)
+        no_day_trip = mock.Mock(spec=trip, days_gone=0)
+        one_day_trip = mock.Mock(spec=trip, days_gone=1)
         trip_list = ForeignTripList([three_day_trip, no_day_trip, one_day_trip])
         self.assertEqual(trip_list.total_days_gone, 4)
 

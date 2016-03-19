@@ -44,6 +44,12 @@ class ForeignTrip():
 
 
 class ForeignTripList(list):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if any(filter(lambda x: not isinstance(x, ForeignTrip), self)):
+            raise ValueError("ForeignTripList must contain only "
+                             "ForeignTrip instances.")
+
     def insert_trip(self, trip):
         if trip in self:
             raise DuplicateTripError("ForeignTrip instances in a "
