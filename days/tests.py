@@ -135,6 +135,106 @@ class ForeignTripTestCase(unittest.TestCase):
         trip_two = ForeignTrip(departure_datetime, return_datetime)
         self.assertEqual(trip_one, trip_two)
 
+    def test_lt_returns_true_based_on_departure_date(self):
+        departure_date_one = date(2015, 10, 20)
+        return_date_one = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        departure_date_two = date(2015, 10, 21)
+        return_date_two = date(2015, 10, 25)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        self.assertTrue(trip_one < trip_two)
+
+    def test_lt_returns_false_based_on_departure_date(self):
+        departure_date_one = date(2015, 10, 20)
+        return_date_one = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        departure_date_two = date(2015, 10, 21)
+        return_date_two = date(2015, 10, 25)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        self.assertFalse(trip_two < trip_one)
+
+    def test_lt_returns_false_for_equal_trips(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip_one = ForeignTrip(departure_date, return_date)
+        trip_two = ForeignTrip(departure_date, return_date)
+        self.assertFalse(trip_one < trip_two)
+
+    def test_le_returns_true_based_on_departure_date(self):
+        departure_date_one = date(2015, 10, 20)
+        return_date_one = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        departure_date_two = date(2015, 10, 21)
+        return_date_two = date(2015, 10, 25)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        self.assertTrue(trip_one <= trip_two)
+
+    def test_le_returns_false_based_on_departure_date(self):
+        departure_date_one = date(2015, 10, 20)
+        return_date_one = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        departure_date_two = date(2015, 10, 21)
+        return_date_two = date(2015, 10, 25)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        self.assertFalse(trip_two <= trip_one)
+
+    def test_le_returns_true_for_equal_trips(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip_one = ForeignTrip(departure_date, return_date)
+        trip_two = ForeignTrip(departure_date, return_date)
+        self.assertTrue(trip_one <= trip_two)
+
+    def test_gt_returns_true_based_on_departure_date(self):
+        departure_date_one = date(2015, 10, 20)
+        return_date_one = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        departure_date_two = date(2015, 10, 21)
+        return_date_two = date(2015, 10, 25)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        self.assertTrue(trip_two > trip_one)
+
+    def test_gt_returns_false_based_on_departure_date(self):
+        departure_date_one = date(2015, 10, 20)
+        return_date_one = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        departure_date_two = date(2015, 10, 21)
+        return_date_two = date(2015, 10, 25)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        self.assertFalse(trip_one > trip_two)
+
+    def test_gt_returns_false_for_equal_trips(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip_one = ForeignTrip(departure_date, return_date)
+        trip_two = ForeignTrip(departure_date, return_date)
+        self.assertFalse(trip_one > trip_two)
+
+    def test_ge_returns_true_based_on_departure_date(self):
+        departure_date_one = date(2015, 10, 20)
+        return_date_one = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        departure_date_two = date(2015, 10, 21)
+        return_date_two = date(2015, 10, 25)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        self.assertTrue(trip_two >= trip_one)
+
+    def test_ge_returns_false_based_on_departure_date(self):
+        departure_date_one = date(2015, 10, 20)
+        return_date_one = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        departure_date_two = date(2015, 10, 21)
+        return_date_two = date(2015, 10, 25)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+        self.assertFalse(trip_one >= trip_two)
+
+    def test_ge_returns_true_for_equal_trips(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 25)
+        trip_one = ForeignTrip(departure_date, return_date)
+        trip_two = ForeignTrip(departure_date, return_date)
+        self.assertTrue(trip_one >= trip_two)
+
 
 class ForeignTripListTestCase(unittest.TestCase):
     def test_constructor_will_create_empty_sequence(self):
@@ -158,13 +258,10 @@ class ForeignTripListTestCase(unittest.TestCase):
             ForeignTripList(["Not a ForeignTrip"])
 
     def test_total_days_gone_sums_days_gone_for_each_foreign_trip(self):
-        departure_date = date(2015, 10, 21)
-        return_date = date(2015, 10, 22)
-        trip = ForeignTrip(departure_date, return_date)
+        three_day_trip = ForeignTrip(date(2015, 10, 21), date(2015, 10, 25))
+        no_day_trip  = ForeignTrip(date(2015, 10, 26), date(2015, 10, 27))
+        one_day_trip = ForeignTrip(date(2015, 10, 28), date(2015, 10, 30))
 
-        three_day_trip = mock.Mock(spec=trip, days_gone=3)
-        no_day_trip = mock.Mock(spec=trip, days_gone=0)
-        one_day_trip = mock.Mock(spec=trip, days_gone=1)
         trip_list = ForeignTripList([three_day_trip, no_day_trip, one_day_trip])
         self.assertEqual(trip_list.total_days_gone, 4)
 

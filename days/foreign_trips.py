@@ -1,6 +1,8 @@
 import datetime as dt
+from functools import total_ordering
 
-class ForeignTrip():
+@total_ordering
+class ForeignTrip:
     def __init__(self, departure_date, return_date):
         super().__init__()
 
@@ -15,6 +17,9 @@ class ForeignTrip():
     def __eq__(self, other):
         return (self.departure_date == other.departure_date
             and self.return_date == other.return_date)
+
+    def __lt__(self, other):
+        return self.departure_date < other.departure_date
 
     def __contains__(self, other_date):
         if isinstance(other_date, dt.datetime):
