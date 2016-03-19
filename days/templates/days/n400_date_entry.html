@@ -5,7 +5,7 @@
   <ul>
     <li>Each trip entered will appear below with the number of days gone.</li>
     <li>The total days gone will be displayed at the bottom of the list.</li>
-    <li>Trips that are more than 180 days will appear in red to alert possible finding of broken continuous residence.</li>
+    <li>Trips that are more than 180 days will appear in red to alert possible finding of abandonment.</li>
     <li>Totals exceeding maximum allowed under physical presence requirements will be marked as such.</li>
   </ul>
   <form method="POST" id="days-gone-form">{% csrf_token %}
@@ -47,7 +47,7 @@
           <td>{{ trip.departure_date }}</td>
           <td>{{ trip.return_date }}</td>
           <td{% if trip.days_gone >= trip_alert_length %} class="alert"{% endif %}>
-            {{ trip.days_gone }}{% if trip.days_gone >= trip_alert_length %} (Note: possible finding of broken continuous residence) {% endif %}
+            {{ trip.days_gone }}{% if trip.days_gone >= trip_alert_length %} (Note: possible finding of abandonment) {% endif %}
           </td>
         </tr>
       {% endfor %}
