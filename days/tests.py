@@ -288,7 +288,7 @@ class ForeignTripListTestCase(unittest.TestCase):
         self.assertIn(trip_two, trip_list)
         self.assertIn(trip_one, trip_list)
 
-    def test_insert_trip__with_duplicate_raises_duplicatetriperror_and_does_not_add_duplicate(self):
+    def test_insert_trip_with_duplicate_raises_duplicatetriperror_and_does_not_add_duplicate(self):
         departure_date = date(2015, 10, 21)
         return_date = date(2015, 10, 22)
         trip = ForeignTrip(departure_date, return_date)
