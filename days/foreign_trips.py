@@ -54,6 +54,7 @@ class ForeignTripList(list):
         if any(filter(lambda x: not isinstance(x, ForeignTrip), self)):
             raise ValueError("ForeignTripList must contain only "
                              "ForeignTrip instances.")
+        self.sort()
 
     def insert_trip(self, trip):
         if trip in self:
