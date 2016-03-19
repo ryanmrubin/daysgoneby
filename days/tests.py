@@ -1,7 +1,7 @@
 from datetime import date, datetime
 import unittest
 from unittest import mock
-from .foreign_trips import ForeignTrip, ForeignTripList
+from .foreign_trips import ForeignTrip, ForeignTripList, DuplicateTripError
 
 
 class ForeignTripTestCase(unittest.TestCase):
@@ -143,3 +143,27 @@ class ForeignTripListTestCase(unittest.TestCase):
         one_day_trip = mock.Mock(days_gone=1)
         trip_list = ForeignTripList([three_day_trip, no_day_trip, one_day_trip])
         self.assertEqual(trip_list.total_days_gone, 4)
+
+    def test_insert_trip_adds_trip_to_original_list(self):
+        departure_date_one = date(2015, 10, 20)
+        departure_date_two = date(2015, 10, 21)
+        return_date_one = date(2015, 10, 25)
+        return_date_two = date(2015, 10, 28)
+        trip_one = ForeignTrip(departure_date_one, return_date_one)
+        trip_two = ForeignTrip(departure_date_two, return_date_two)
+
+        trip_list = ForeignTripList([trip_one])
+        trip_list.insert_trip(trip_two)
+        self.assertIn(trip_two, trip_list)
+        self.assertIn(trip_one, trip_list)
+
+    def test_insert_trip__with_duplicate_raises_duplicatetriperror_and_does_not_add_duplicate(self):
+        departure_date = date(2015, 10, 21)
+        return_date = date(2015, 10, 22)
+        trip = ForeignTrip(departure_date, return_date)
+        identical_trip = ForeignTrip(departure_date, return_date)
+
+        trip_list = ForeignTripList([trip])
+        with self.assertRaises(DuplicateTripError):
+            trip_list.insert_trip(identical_trip)
+        self.assertEqual(len(trip_list), 1)

@@ -45,6 +45,9 @@ class ForeignTrip():
 
 class ForeignTripList(list):
     def insert_trip(self, trip):
+        if trip in self:
+            raise DuplicateTripError("ForeignTrip instances in a "
+                                     "ForeignTripList must be unique.")
         self.append(trip)
 
     @property
