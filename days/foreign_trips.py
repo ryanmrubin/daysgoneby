@@ -6,8 +6,10 @@ from functools import total_ordering
 class DuplicateTripError(ValueError):
     pass
 
+
 class OverlappingTripError(ValueError):
     pass
+
 
 @total_ordering
 class ForeignTrip:
