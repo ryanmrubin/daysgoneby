@@ -51,6 +51,27 @@ class ForeignTrip:
             self._days_gone = (self.return_date - self.departure_date).days - 1
         return self._days_gone
 
+    def days_gone_between(self, start_date, end_date):
+        """
+        Returns days gone after start_date and before end_date.
+        Assumes start_date and end_date are datetime.date instances.
+        Start and end dates do not count as days gone.
+        """
+        if start_date < self.departure_date and end_date > self.return_date:
+            return self.days_gone
+
+        elif start_date in self and end_date in self:
+            return (end_date - start_date).days - 1
+
+        elif start_date in self:
+            return (self.return_date - start_date).days - 1
+
+        elif end_date in self:
+            return (end_date - self.departure_date).days - 1
+
+        else: # ranges don't overlap
+            return 0
+
     @classmethod
     def build_from_form(cls, form):
         departure_date = form.cleaned_data['departure_date']

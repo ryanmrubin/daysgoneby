@@ -236,6 +236,42 @@ class ForeignTripTestCase(unittest.TestCase):
         trip_two = ForeignTrip(departure_date, return_date)
         self.assertTrue(trip_one >= trip_two)
 
+    def test_days_gone_between_when_both_dates_are_inside_trip_returns_days_between_dates(self):
+        trip = ForeignTrip(date(2015, 10, 1), date(2015, 10, 31))
+        start_date = date(2015, 10, 10)
+        end_date = date(2015, 10, 15)
+        self.assertEqual(trip.days_gone_between(start_date, end_date), 4)
+
+    def test_days_gone_between_when_dates_surround_trip_returns_trips_days_gone(self):
+        trip = ForeignTrip(date(2015, 10, 10), date(2015, 10, 15))
+        start_date = date(2015, 10, 1)
+        end_date = date(2015, 10, 31)
+        self.assertEqual(trip.days_gone_between(start_date, end_date), trip.days_gone)
+
+    def test_days_gone_between_when_start_date_only_is_inside_trip(self):
+        trip = ForeignTrip(date(2015, 10, 10), date(2015, 10, 15))
+        start_date = date(2015, 10, 12)
+        end_date = date(2015, 10, 31)
+        self.assertEqual(trip.days_gone_between(start_date, end_date), 2)
+
+    def test_days_gone_between_when_end_date_only_is_inside_trip(self):
+        trip = ForeignTrip(date(2015, 10, 10), date(2015, 10, 15))
+        start_date = date(2015, 10, 1)
+        end_date = date(2015, 10, 14)
+        self.assertEqual(trip.days_gone_between(start_date, end_date), 3)
+
+    def test_days_gone_between_when_date_range_is_the_same_as_the_trip_returns_trips_days_gone(self):
+        trip = ForeignTrip(date(2015, 10, 21), date(2015, 10, 25))
+        start_date = date(2015, 10, 21)
+        end_date = date(2015, 10, 25)
+        self.assertEqual(trip.days_gone_between(start_date, end_date), trip.days_gone)
+
+    def test_days_gone_between_when_date_range_does_not_overlap_trip_returns_zero(self):
+        trip = ForeignTrip(date(2015, 10, 20), date(2015, 10, 31))
+        start_date = date(2015, 10, 1)
+        end_date = date(2015, 10, 10)
+        self.assertEqual(trip.days_gone_between(start_date, end_date), 0)
+
 
 class ForeignTripListTestCase(unittest.TestCase):
     def test_constructor_will_create_empty_sequence(self):
