@@ -381,3 +381,11 @@ class ForeignTripListTestCase(unittest.TestCase):
         trip_list = ForeignTripList([trip_1, trip_3])
         trip_list.insert_trip(trip_2)
         self.assertIn(trip_2, trip_list)
+
+    def test_get_days_gone_for_application_sums_days_gone_between_five_years_prior_and_one_day_after_app_date(self):
+        application_date = date(2015, 10, 21)
+        trip_1 = ForeignTrip(date(2006, 1, 1), date(2006, 12, 1)) # 0 days gone in 5 year period
+        trip_2 = ForeignTrip(date(2010, 10, 1), date(2010, 10, 23)) # 1 day gone in 5 year period
+        trip_3 = ForeignTrip(date(2013, 3, 10), date(2013, 3, 21)) # 10 days gone in 5 year period
+        trip_list = ForeignTripList([trip_1, trip_2, trip_3])
+        self.assertEqual(trip_list.get_days_gone_for_application(application_date), 11)

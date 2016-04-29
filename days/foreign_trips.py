@@ -114,3 +114,18 @@ class ForeignTripList(list):
     @property
     def total_days_gone(self):
         return sum(trip.days_gone for trip in self)
+
+    def get_days_gone_for_application(self, application_date):
+        """
+        Calculates days gone from all trips listed within the five years
+        leading up to the file date. The same date, five years prior,
+        does not count.
+        application_date is assumed to be a datetime.date instance.
+        """
+        start_date = dt.date(application_date.year-5,
+                             application_date.month,
+                             application_date.day)
+        end_date = application_date + dt.timedelta(days=1)
+
+        return sum(trip.days_gone_between(start_date, end_date)
+                   for trip in self)
