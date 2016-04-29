@@ -46,8 +46,8 @@
         <tr>
           <td>{{ trip.departure_date }}</td>
           <td>{{ trip.return_date }}</td>
-          <td{% if trip.days_gone >= trip_alert_length %} class="alert"{% endif %}>
-            {{ trip.days_gone }}{% if trip.days_gone >= trip_alert_length %} (Note: possible finding of abandonment) {% endif %}
+          <td{% if trip.days_gone >= single_trip_alert_length %} class="alert"{% endif %}>
+            {{ trip.days_gone }}{% if trip.days_gone >= single_trip_alert_length %} (Note: possible finding of abandonment) {% endif %}
           </td>
         </tr>
       {% endfor %}
