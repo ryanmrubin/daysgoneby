@@ -82,10 +82,14 @@ def n400_date_entry(request):
 
     single_trip_alert_length = settings.BROKEN_CONTINUOUS_RESIDENCE_THRESHOLD_DAYS
     total_days_gone = trips_so_far.total_days_gone
+
+    statutory_days_gone = trips_so_far.get_days_gone_for_application(submission_date)
+
     context = {'submission_date': submission_date,
                'form': form,
                'single_trip_alert_length':single_trip_alert_length,
                'trips_so_far': trips_so_far,
                'total_days_gone': total_days_gone,
+               'statutory_days_gone': statutory_days_gone,
               }
     return render(request,'days/n400_date_entry.html', context)

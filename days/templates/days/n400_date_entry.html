@@ -55,6 +55,12 @@
         <th colspan="2">Total Days Gone:</th>
         <td class="sum-cell">{{ total_days_gone }}</td>
       </tr>
+      {% if total_days_gone != statutory_days_gone %}
+        <tr class="sum-row">
+          <th colspan="2">Days Gone within Statutory Period:</th>
+          <td class="sum-cell"> {{ statutory_days_gone }}</td>
+        </tr>
+      {% endif %}
     </table>
   {% endif %}
 
