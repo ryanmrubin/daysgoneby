@@ -1,6 +1,7 @@
 import bisect
 import datetime as dt
 from functools import total_ordering
+from .utils import get_statutory_start_date
 
 
 class DuplicateTripError(ValueError):
@@ -122,9 +123,7 @@ class ForeignTripList(list):
         does not count.
         application_date is assumed to be a datetime.date instance.
         """
-        start_date = dt.date(application_date.year-5,
-                             application_date.month,
-                             application_date.day)
+        start_date = get_statutory_start_date(application_date)
         end_date = application_date + dt.timedelta(days=1)
 
         return sum(trip.days_gone_between(start_date, end_date)
