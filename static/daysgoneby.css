@@ -24,13 +24,20 @@ th {
 th.head-row {
   text-align: left;
 }
-td.alert {
+.sum-row th {
+  font-weight: normal;
+}
+.alert {
   color: red;
+}
+.good-news {
+  color: #03B50C;
 }
 small {
   font-size: 0.8rem;
 }
-#result-data {
+#result-data,
+#result-data table {
   font-size: 1.3rem;
 }
 .sum-cell {

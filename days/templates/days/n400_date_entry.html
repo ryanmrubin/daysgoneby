@@ -36,41 +36,42 @@
   </form>
 
   {% if trips_so_far %}
-    <table id="result-data">
-      <tr>
-        <th class="head-row">Departure Date</th>
-        <th class="head-row">Return Date</th>
-        <th class="head-row">Days Gone</th>
-      </tr>
-      {% for trip in trips_so_far %}
+    <div id="result-data">
+      <table>
         <tr>
-          <td>{{ trip.departure_date }}</td>
-          <td>{{ trip.return_date }}</td>
-          <td{% if trip.days_gone >= single_trip_alert_length %} class="alert"{% endif %}>
-            {{ trip.days_gone }}{% if trip.days_gone >= single_trip_alert_length %} (Note: possible finding of abandonment) {% endif %}
-          </td>
+          <th class="head-row">Departure Date</th>
+          <th class="head-row">Return Date</th>
+          <th class="head-row">Days Gone</th>
         </tr>
-      {% endfor %}
-      <tr class="sum-row">
-        <th colspan="2">Total Days Gone:</th>
-        <td class="sum-cell">{{ total_days_gone }}</td>
-      </tr>
-      {% if total_days_gone != statutory_days_gone %}
+        {% for trip in trips_so_far %}
+          <tr>
+            <td>{{ trip.departure_date }}</td>
+            <td>{{ trip.return_date }}</td>
+            <td{% if trip.days_gone >= single_trip_alert_length %} class="alert"{% endif %}>
+              {{ trip.days_gone }}{% if trip.days_gone >= single_trip_alert_length %} (Note: possible finding of abandonment) {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
         <tr class="sum-row">
-          <th colspan="2">Days Gone within Statutory Period:</th>
-          <td class="sum-cell"> {{ statutory_days_gone }}</td>
+          <th colspan="2">Total Days Gone:</th>
+          <td class="sum-cell">{{ total_days_gone }}</td>
         </tr>
+        {% if total_days_gone != statutory_days_gone %}
+          <tr class="sum-row">
+            <th colspan="2">Days Gone within Statutory Period:</th>
+            <td> {{ statutory_days_gone }}</td>
+          </tr>
+        {% endif %}
+          <tr>
+            <th colspan="2">Days Present within Statutory Period:</th>
+            <td class="{% if statutory_days_present < minimum_days_present %}alert{% else %}good-news{% endif %}">{{ statutory_days_present }}</td>
+          </tr>
+      </table>
+      {% if statutory_days_present < minimum_days_present %}
+        <p class="alert announcement">For the above entered dates, this application does not meet the minimum number of required days present during the statutory period.</p>
+      {% else %}
+        <p class="good-news announcement">For the above entered dates, this application meets the minimum number of required days present during the statutory period.</p>
       {% endif %}
-        <tr>
-          <th colspan="2">Days Present within Statutory Period:</th>
-          <td class="{% if statutory_days_present < minimum_days_present %}alert{% else %}good-news{% endif %}">{{ statutory_days_present }}</td>
-        </tr>
-    </table>
-    {% if statutory_days_present < minimum_days_present %}
-      <p class="alert announcement">For the above entered dates, this application does not meet the minimum number of required days present during the statutory period.</p>
-    {% else %}
-      <p class="good-news announcement">For the above entered dates, this application meets the minimum number of required days present during the statutory period.</p>
-    {% endif %}
     </div>
   {% endif %}
 
