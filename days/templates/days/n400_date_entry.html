@@ -61,7 +61,17 @@
           <td class="sum-cell"> {{ statutory_days_gone }}</td>
         </tr>
       {% endif %}
+        <tr>
+          <th colspan="2">Days Present within Statutory Period:</th>
+          <td class="{% if statutory_days_present < minimum_days_present %}alert{% else %}good-news{% endif %}">{{ statutory_days_present }}</td>
+        </tr>
     </table>
+    {% if statutory_days_present < minimum_days_present %}
+      <p class="alert announcement">For the above entered dates, this application does not meet the minimum number of required days present during the statutory period.</p>
+    {% else %}
+      <p class="good-news announcement">For the above entered dates, this application meets the minimum number of required days present during the statutory period.</p>
+    {% endif %}
+    </div>
   {% endif %}
 
 {% endblock n400_content %}

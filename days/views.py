@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from .forms import DaysGoneCalculatorForm, N400SubmissionForm
 from .foreign_trips import (ForeignTrip, ForeignTripList,
                             DuplicateTripError, OverlappingTripError)
+from .utils import get_statutory_start_date
 
 
 def calculate_days_gone(request):
@@ -84,6 +85,9 @@ def n400_date_entry(request):
     total_days_gone = trips_so_far.total_days_gone
 
     statutory_days_gone = trips_so_far.get_days_gone_for_application(submission_date)
+    statutory_period_days = (submission_date - get_statutory_start_date(submission_date)).days
+    statutory_days_present = statutory_period_days - statutory_days_gone
+    minimum_days_present = settings.N400_MINIMUM_DAYS_PRESENT
 
     context = {'submission_date': submission_date,
                'form': form,
@@ -91,5 +95,7 @@ def n400_date_entry(request):
                'trips_so_far': trips_so_far,
                'total_days_gone': total_days_gone,
                'statutory_days_gone': statutory_days_gone,
+               'statutory_days_present': statutory_days_present,
+               'minimum_days_present': minimum_days_present,
               }
     return render(request,'days/n400_date_entry.html', context)
