@@ -1,5 +1,7 @@
 # daysgoneby
 
+[![Build Status](https://travis-ci.org/ryanmrubin/daysgoneby.svg?branch=master)](https://travis-ci.org/ryanmrubin/daysgoneby)
+
 Minimal, Heroku-deployable Django app to calculate days out of the country for immigration law purposes.
 
 For dev setup (Ubuntu):
