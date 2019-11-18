@@ -7,14 +7,14 @@ Minimal, Heroku-deployable Django app to calculate days out of the country for i
 For dev setup (Ubuntu):
 
  1. Clone repo.
- 2. From repo root: `python3.5 -m venv env`
- 3. `source env/bin/activate`
- 4. `pip install -r dev-requirements.txt`
- 5. `export DJANGO_SETTINGS_MODULE='daysgoneby.settings.dev'`
- 6. `./manage.py test`
- 7. Verify tests pass.
- 8. `./manage.py runserver`
- 9. Verify server is running.
+ 1. From repo root: `python3.5 -m venv env`
+ 1. `source env/bin/activate`
+ 1. `pip install -r dev-requirements.txt`
+ 1. `export DJANGO_SETTINGS_MODULE='daysgoneby.settings.dev'`
+ 1. `./manage.py test`
+ 1. Verify tests pass.
+ 1. `./manage.py runserver`
+ 1. Verify server is running.
 
 Here's a handy pair of aliases for you to tweak and use:
 
